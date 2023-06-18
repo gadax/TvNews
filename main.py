@@ -1,72 +1,35 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
+from fastapi.responses import JSONResponse
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
 import psycopg2
-# from contextlib import asynccontextmanager
+import migration
 
 
-# sql2 = '''COPY news(date, title, url, media)\
-# FROM '/app/drought-tv-news.csv'\
-# DELIMITER ','\
-# CSV HEADER;'''
-  
-# cur.execute(sql2)
-# conn.close()
-from contextlib import asynccontextmanager
-
-@asynccontextmanager
-async def lifespan(app: FastAPI):
-    print('before')
-    yield
-    print('after')
-
-
-app = FastAPI(lifespan=lifespan)
-gen = {}
-
-# app = FastAPI()
-
-
-@app.get("/init")
-async def start():
-    print('hhhh')
-    conn = psycopg2.connect(
-        host="postgres",
-        user="fastapi",
-        database="tvnews",
-        password="azerty"
-    )
-    conn.autocommit = True
-    cur = conn.cursor()
-
-    sql = 'SELECT datname FROM pg_database;'
-    cur.execute(sql)
-    print(cur.fetchall())
-    sql = "GRANT ALL ON database tvnews TO fastapi"
-    cur.execute(sql)
-    sql = '''CREATE TABLE IF NOT EXISTS news(\
-    id SERIAL,\
-    date varchar(50),\
-    title varchar(250),\
-    url text,\
-    media varchar(200));'''
-    cur.execute(sql)
-    sql2 = '''COPY news(date, title, url, media)\
-    FROM '/app/drought-tv-news.csv'\
-    DELIMITER ','\
-    CSV HEADER;'''
-    cur.execute(sql2)
-
-    sql = "SELECT * FROM news"
-    cur.execute(sql)
-
-    return [cur.fetchall()]
-
+app = FastAPI()
+cur = migration.init()
+app.mount("/templates", StaticFiles(directory="templates"), name="static")
+tjinja = Jinja2Templates(directory="templates")
 
 
 @app.get("/")
+async def app_shell(request: Request):
+    return tjinja.TemplateResponse('index.html', {"request": request})
+
+@app.get("/ping")
 async def ping():
     return {"msg": "pong"}
 
-
-@app.get("/postgres")
+@app.get("/news/all")
 async def select():
-    return {"msg": "bonjour"}
+    sql = "SELECT * FROM news"
+    cur.execute(sql)
+
+    return JSONResponse(cur.fetchall())
+
+@app.get("/news/{id}")
+async def select_one(id):
+    sql = f"SELECT * FROM news WHERE id={id}"
+    cur.execute(sql)
+
+    return JSONResponse(cur.fetchall())

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Tv News</title>
+	</head>
+
+	<body>
+		<h1>Tv News</h1>
+		<button id="all">all</button>
+		<button id="one">one</button>
+		<input type="number" id="oneValue" value="1">
+
+		<main id="content"></main>
+
+		<script type="text/javascript">
+			let all = document.getElementById('all');
+			let one = document.getElementById('one');
+			let oneValue = document.getElementById('oneValue');
+			let content = document.getElementById('content');
+
+			all.addEventListener('click', () => {
+				fetch('/news/all').then(response => {
+					return response.json();
+				}).then(json => {
+					content.innerHTML = JSON.stringify(json);
+				});
+			});
+
+			one.addEventListener('click', () => {
+				fetch('/news/' + oneValue.value).then(response => {
+					return response.json();
+				}).then(json => {
+					content.innerHTML = JSON.stringify(json);
+				});
+			});
+			
+		</script>
+	</body>
+</html>

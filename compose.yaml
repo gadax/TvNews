@@ -6,7 +6,8 @@ services:
     volumes:
       - .:/app
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy
 
   postgres:
     image: postgres
@@ -17,12 +18,13 @@ services:
       - ./database:/var/lib/postgresql/data
     
     environment:
+      POSTGRES_HOST: 0.0.0.0
       POSTGRES_USER: fastapi
       POSTGRES_PASSWORD: azerty
       POSTGRES_DB: tvnews
 
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U fastapi tvnews"]
+      test: ["CMD-SHELL", "sh", "-c", "pg_isready", "-i", "-U", "fastapi", "-d", "tvnews"]
       interval: 5s
       timeout: 5s
       retries: 5

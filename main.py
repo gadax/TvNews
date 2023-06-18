@@ -2,8 +2,8 @@ from fastapi import FastAPI
 import psycopg2
 
 conn = psycopg2.connect(
-    host="localhost",
-    port="5432",
+    host="postgres",
+    user="fastapi",
     database="tvnews",
     password="azerty"
 )
@@ -15,7 +15,7 @@ employee_name char(20),\
 employee_email varchar(30), employee_salary float);'''
   
   
-cursor.execute(sql)
+cur.execute(sql)
   
 # sql2 = '''COPY details(employee_id,employee_name,\
 # employee_email,employee_salary)

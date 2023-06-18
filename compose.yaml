@@ -1,0 +1,16 @@
+services:
+  webapp:
+    build: .
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/app
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres
+    environnement:
+      POSTGRES_USER: fastapi
+      POSTGRES_PASSWORD: azerty
+      POSTGRES_DB: tvnews

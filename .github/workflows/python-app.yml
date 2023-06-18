@@ -27,9 +27,3 @@ jobs:
 
     - name: Run tests
       run: docker exec -t tvnews-webapp-1 pytest
-
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v3

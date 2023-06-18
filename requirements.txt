@@ -1,7 +1,7 @@
 fastapi
 pydantic
 uvicorn
-psycopg3
+psycopg2
 pytest
 jinja2
 httpx

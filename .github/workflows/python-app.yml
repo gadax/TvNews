@@ -30,7 +30,7 @@ jobs:
         chromedriver-version: '88.0.4324.96'
 
     - name: Run selenium tests
-      run: python .\tests\test_selenium.py
+      run: python /app/tests_app_shell/test_selenium.py
 
   deploy:
     runs-on: ubuntu-latest

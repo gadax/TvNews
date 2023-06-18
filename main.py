@@ -17,11 +17,11 @@ employee_email varchar(30), employee_salary float);'''
   
 cursor.execute(sql)
   
-sql2 = '''COPY details(employee_id,employee_name,\
-employee_email,employee_salary)
-FROM '/private/tmp/details.csv'
-DELIMITER ','
-CSV HEADER;'''
+# sql2 = '''COPY details(employee_id,employee_name,\
+# employee_email,employee_salary)
+# FROM '/private/tmp/details.csv'
+# DELIMITER ','
+# CSV HEADER;'''
   
 
   

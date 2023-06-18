@@ -11,10 +11,19 @@ import time
   
 # cur.execute(sql2)
 # conn.close()
+from contextlib import asynccontextmanager
 
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    print('before')
+    yield
+    print('after')
+
+
+app = FastAPI(lifespan=lifespan)
 gen = {}
 
-app = FastAPI()
+# app = FastAPI()
 
 
 @app.get("/init")
@@ -26,6 +35,7 @@ async def start():
         database="tvnews",
         password="azerty"
     )
+    conn.autocommit = True
     cur = conn.cursor()
 
     sql = 'SELECT datname FROM pg_database;'
@@ -34,7 +44,7 @@ async def start():
     sql = "GRANT ALL ON database tvnews TO fastapi"
     cur.execute(sql)
     conn.commit()
-    sql = '''CREATE TABLE news(\
+    sql = '''CREATE TABLE IF NOT EXISTS news(\
     id SERIAL,\
     date varchar(50),\
     title varchar(250),\

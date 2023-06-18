@@ -20,7 +20,7 @@
 			let oneValue = document.getElementById('oneValue');
 			let content = document.getElementById('content');
 
-			function createTable(tableData) {
+			function createTable(tableData, content) {
 				let table = document.createElement('table');
 				let tableBody = document.createElement('tbody');
 
@@ -37,14 +37,15 @@
 				});
 
 				table.appendChild(tableBody);
-				document.body.appendChild(table);
+				content.appendChild(table);
 			}
 
 			all.addEventListener('click', () => {
 				fetch('/news/all').then(response => {
 					return response.json();
 				}).then(json => {
-					createTable(json);
+					content.innerHTML = '';
+					createTable(json, content);
 				});
 			});
 
@@ -52,7 +53,8 @@
 				fetch('/news/' + oneValue.value).then(response => {
 					return response.json();
 				}).then(json => {
-					createTable(json);
+					content.innerHTML = '';
+					createTable(json, content);
 				});
 			});
 			

@@ -21,8 +21,8 @@ jobs:
     - name: List containers running
       run: docker ps
 
-    # - name: Run tests
-    #   run: pytest
+    - name: Run tests
+      run: docker exec -it tvnews-postgres-1 pytest
 
     # - name: Stop containers
     #   if: always()

@@ -2,8 +2,7 @@ from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-import psycopg2
-import migration
+from migration import migration 
 
 
 app = FastAPI()

@@ -27,7 +27,6 @@ jobs:
     - name: Run tests selenium
       run: docker exec -t tvnews-webapp-1 python .\tests\test_selenium.py
 
-jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:

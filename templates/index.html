@@ -20,11 +20,31 @@
 			let oneValue = document.getElementById('oneValue');
 			let content = document.getElementById('content');
 
+			function createTable(tableData) {
+				let table = document.createElement('table');
+				let tableBody = document.createElement('tbody');
+
+				tableData.forEach(rowData => {
+					let row = document.createElement('tr');
+
+					rowData.forEach(cellData => {
+						let cell = document.createElement('td');
+						cell.appendChild(document.createTextNode(cellData));
+						row.appendChild(cell);
+					});
+
+					tableBody.appendChild(row);
+				});
+
+				table.appendChild(tableBody);
+				document.body.appendChild(table);
+			}
+
 			all.addEventListener('click', () => {
 				fetch('/news/all').then(response => {
 					return response.json();
 				}).then(json => {
-					content.innerHTML = JSON.stringify(json);
+					createTable(json);
 				});
 			});
 
@@ -32,7 +52,7 @@
 				fetch('/news/' + oneValue.value).then(response => {
 					return response.json();
 				}).then(json => {
-					content.innerHTML = JSON.stringify(json);
+					createTable(json);
 				});
 			});
 			

@@ -21,9 +21,17 @@ jobs:
     - name: List containers running
       run: docker ps
 
-    # - name: List dir
-    #   # run: docker exec -t tvnews-postgres-1 bash -c "pip list"
-    #   run: docker exec -t tvnews-webapp-1 ls
-
-    - name: Run tests
+    - name: Run tests pytest
       run: docker exec -t tvnews-webapp-1 pytest
+
+    - name: Run tests selenium
+      run: docker exec -t tvnews-webapp-1 python .\tests\test_selenium.py
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Ftp sending
+      run: echo '???'

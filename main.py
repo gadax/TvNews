@@ -21,13 +21,14 @@ async def ping():
 
 @app.get("/news/all")
 async def select():
-    sql = "SELECT * FROM news"
+    sql = "SELECT * FROM news LIMIT 50"
     cur.execute(sql)
 
     return JSONResponse(cur.fetchall())
 
 @app.get("/news/{id}")
 async def select_one(id):
+    id = int(id)
     sql = f"SELECT * FROM news WHERE id={id}"
     cur.execute(sql)
 

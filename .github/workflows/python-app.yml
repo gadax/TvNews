@@ -24,11 +24,6 @@ jobs:
     - name: Run tests pytest
       run: docker exec -t tvnews-webapp-1 pytest
 
-    - name: Install Chrome driver
-      uses: nanasess/setup-chromedriver@v2
-      with:
-        chromedriver-version: '113.0.5672.126'
-
     - name: Install selenium
       run: pip install selenium
 

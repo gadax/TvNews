@@ -10,23 +10,21 @@ conn = psycopg2.connect(
 
 cur = conn.cursor()
 
-sql = '''CREATE TABLE DETAILS(employee_id int NOT NULL,\
-employee_name char(20),\
-employee_email varchar(30), employee_salary float);'''
+sql = '''CREATE TABLE news(\
+id SERIAL,\
+`date` varchar(50),\
+title varchar(200),\
+url varchar(200),\
+media varchar(200));'''
+
+sql2 = '''COPY persons(first_name, last_name, dob, email)\
+FROM '/app/drought-tv-news.csv'\
+DELIMITER ','\
+CSV HEADER;'''
   
   
 cur.execute(sql)
-  
-# sql2 = '''COPY details(employee_id,employee_name,\
-# employee_email,employee_salary)
-# FROM '/private/tmp/details.csv'
-# DELIMITER ','
-# CSV HEADER;'''
-  
-
-  
 conn.close()
-
 
 
 app = FastAPI()
@@ -38,6 +36,5 @@ async def ping():
 
 @app.get("/postgres")
 async def select():
-    cur.execute("SELECT")
     
     return {"msg": "bonjour"}

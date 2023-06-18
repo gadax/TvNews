@@ -1,12 +1,16 @@
 import psycopg2
+import os
 
+if os.getenv("SCALINGO_POSTGRESQL_URL"):
+	psycopg2.connect(os.getenv("SCALINGO_POSTGRESQL_URL"))
+else:
+	conn = psycopg2.connect(
+		host="postgres",
+		user="fastapi",
+		database="tvnews",
+		password="azerty"
+	)
 
-conn = psycopg2.connect(
-    host="postgres",
-    user="fastapi",
-    database="tvnews",
-    password="azerty"
-)
 conn.autocommit = True
 cur = conn.cursor()
 

@@ -23,7 +23,3 @@ jobs:
 
     - name: Run tests
       run: docker exec -it tvnews-postgres-1 pytest
-
-    # - name: Stop containers
-    #   if: always()
-    #   run: docker compose -f "compose.yaml" down

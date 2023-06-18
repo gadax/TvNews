@@ -22,7 +22,7 @@ jobs:
       run: docker ps
 
     - name: List python package
-      run: docker exec tvnews-postgres-1 bash -c "pip list"
+      run: docker exec -t tvnews-postgres-1 bash -c "pip list"
 
     - name: Run tests
-      run: docker exec tvnews-postgres-1 bash -c "pytest"
+      run: docker exec -t tvnews-postgres-1 bash -c "pytest"

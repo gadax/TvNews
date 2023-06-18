@@ -10,7 +10,7 @@ permissions:
   contents: read
 
 jobs:
-  setup-containers:
+  test:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -21,8 +21,15 @@ jobs:
     - name: List containers running
       run: docker ps
 
-    - name: List python package
-      # run: docker exec -t tvnews-postgres-1 bash -c "pip list"
-      run: docker exec -t tvnews-postgres-1 ls
+    # - name: List dir
+    #   # run: docker exec -t tvnews-postgres-1 bash -c "pip list"
+    #   run: docker exec -t tvnews-webapp-1 ls
+
     - name: Run tests
-      run: docker exec -t tvnews-postgres-1 sh "pytest"
+      run: docker exec -t tvnews-webapp-1 pytest
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3

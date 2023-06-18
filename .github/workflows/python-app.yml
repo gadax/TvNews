@@ -25,7 +25,9 @@ jobs:
       run: docker exec -t tvnews-webapp-1 pytest
 
     - name: Run tests selenium
-      run: docker exec -t tvnews-webapp-1 python .\tests\test_selenium.py
+      with:
+        chromedriver-version: '88.0.4324.96'
+      run: python .\tests\test_selenium.py
 
   deploy:
     runs-on: ubuntu-latest

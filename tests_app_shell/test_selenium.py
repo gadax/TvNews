@@ -3,6 +3,10 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 
+# from webdriver_manager.chrome import ChromeDriverManager
+
+# driver = webdriver.Chrome(ChromeDriverManager().install())
+
 
 chrome_options = Options()
 chrome_options.add_argument("--headless")
@@ -12,9 +16,8 @@ def test_default_value_one():
 	driver.get("http://localhost:8080/")
 
 	elem = driver.find_element(By.ID, "oneValue")
-	assert 1 == elem.get_attribute("value")
+	assert 1 == int(elem.get_attribute("value"))
 
 	driver.close()
-
 
 test_default_value_one()

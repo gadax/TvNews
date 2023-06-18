@@ -1,6 +1,5 @@
 from fastapi import FastAPI
 import psycopg2
-import time
 # from contextlib import asynccontextmanager
 
 
@@ -43,26 +42,23 @@ async def start():
     print(cur.fetchall())
     sql = "GRANT ALL ON database tvnews TO fastapi"
     cur.execute(sql)
-    conn.commit()
     sql = '''CREATE TABLE IF NOT EXISTS news(\
     id SERIAL,\
     date varchar(50),\
     title varchar(250),\
     url text,\
     media varchar(200));'''
-    conn.commit()
     cur.execute(sql)
     sql2 = '''COPY news(date, title, url, media)\
     FROM '/app/drought-tv-news.csv'\
     DELIMITER ','\
     CSV HEADER;'''
-      
     cur.execute(sql2)
-    conn.commit()
 
     sql = "SELECT * FROM news"
     cur.execute(sql)
-    print(cur.fetchall())
+
+    return [cur.fetchall()]
 
 
 

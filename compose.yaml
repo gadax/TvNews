@@ -15,7 +15,6 @@ services:
     volumes:
       - .:/app
       - ./database:/var/lib/postgresql/data
-    restart: always
     
     environment:
       POSTGRES_USER: fastapi

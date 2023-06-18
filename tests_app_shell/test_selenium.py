@@ -10,7 +10,7 @@ webdriver_service = service.Service(ChromeDriverManager().install())
 webdriver_service.start()
 
 chrome_options = Options()
-chrome_options.add_argument("--headless")
+# chrome_options.add_argument("--headless")
 driver = webdriver.Remote(webdriver_service.service_url, options = chrome_options)
 
 def test_default_value_one():

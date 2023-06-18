@@ -22,4 +22,4 @@ jobs:
       run: docker ps
 
     - name: Run tests
-      run: docker exec tvnews-postgres-1 python -m pytest
+      run: docker exec tvnews-postgres-1 bash -c "python -m pytest"
